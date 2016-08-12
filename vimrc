@@ -12,6 +12,9 @@ Plugin 'othree/javascript-libraries-syntax.vim'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'scrooloose/syntastic'
 Plugin 'jdkanani/vim-material-theme'
+Plugin 'blueyed/vim-diminactive'
+Plugin 'tpope/vim-commentary'
+Plugin 'jiangmiao/auto-pairs'
 
 call vundle#end()           
 
