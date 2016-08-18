@@ -16,6 +16,9 @@ Plugin 'jdkanani/vim-material-theme'
 Plugin 'blueyed/vim-diminactive'
 Plugin 'tpope/vim-commentary'
 Plugin 'jiangmiao/auto-pairs'
+Plugin 'pangloss/vim-javascript'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'Valloric/YouCompleteMe'
 
 call vundle#end()           
 
