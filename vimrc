@@ -1,5 +1,4 @@
-set termguicolors
-set nocompatible           
+set nocompatible
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -10,6 +9,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
 Plugin 'othree/yajs.vim'
+Plugin 'othree/es.next.syntax.vim'
 Plugin 'othree/javascript-libraries-syntax.vim'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'scrooloose/syntastic'
@@ -18,29 +18,15 @@ Plugin 'blueyed/vim-diminactive'
 Plugin 'tpope/vim-commentary'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'pangloss/vim-javascript'
+Plugin 'mxw/vim-jsx'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'Valloric/YouCompleteMe'
-
-call vundle#end()           
-
-nmap ,a= :Tabularize /=<CR>
-vmap ,a= :Tabularize /=<CR>
-nmap ,a: :Tabularize /:<CR>
-vmap ,a: :Tabularize /:<CR>
-nmap ,aa :Tabularize /\CAS<CR>
+Plugin 'mileszs/ack.vim'
+Plugin 'rking/ag.vim'
+Plugin 'fatih/vim-go'
 
 
-set number
-set tabstop=2
-set smarttab
-set shiftwidth=2
-set expandtab
-set cc=80
-set autoread
-set ai
-set si
-set wrap
-
+call vundle#end()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -62,6 +48,28 @@ let g:mapleader = ","
 " Fast saving
 nmap <leader>w :w!<cr>
 
+nmap <leader>s :Ag
+
+nmap ,a= :Tabularize /=<CR>
+vmap ,a= :Tabularize /=<CR>
+nmap ,a: :Tabularize /:<CR>
+vmap ,a: :Tabularize /:<CR>
+nmap ,aa :Tabularize /\CAS<CR>
+nmap ,ff :Tabularize /from<CR>
+
+
+set number
+set tabstop=2
+set smarttab
+set shiftwidth=2
+set expandtab
+set cc=80
+set autoread
+set ai
+set si
+set wrap
+set relativenumber
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
@@ -70,7 +78,7 @@ nmap <leader>w :w!<cr>
 set so=7
 
 " Avoid garbled characters in Chinese language windows OS
-let $LANG='en' 
+let $LANG='en'
 set langmenu=en
 source $VIMRUNTIME/delmenu.vim
 source $VIMRUNTIME/menu.vim
@@ -102,23 +110,23 @@ set whichwrap+=<,>,h,l
 " Ignore case when searching
 set ignorecase
 
-" When searching try to be smart about cases 
+" When searching try to be smart about cases
 set smartcase
 
 " Highlight search results
 set hlsearch
 
 " Makes search act like search in modern browsers
-set incsearch 
+set incsearch
 
 " Don't redraw while executing macros (good performance config)
-set lazyredraw 
+set lazyredraw
 
 " For regular expressions turn magic on
 set magic
 
 " Show matching brackets when text indicator is over them
-set showmatch 
+set showmatch
 " How many tenths of a second to blink when matching brackets
 set mat=2
 
@@ -135,11 +143,7 @@ set foldcolumn=1
 " => Colors and Fonts
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Enable syntax highlighting
-syntax enable 
-try
-  colorscheme material-theme
-catch
-endtry
+syntax enable
 
 set background=dark
 
@@ -149,6 +153,13 @@ if has("gui_running")
   set guioptions-=e
   set t_Co=256
   set guitablabel=%M\ %t
+endif
+
+if has("gui_macvim")
+  set termguicolors
+  colorscheme material-theme
+else
+  colorscheme default
 endif
 
 " Set utf8 as standard encoding and en_US as the standard language
@@ -224,10 +235,10 @@ au FileType javascript setl nocindent
 au FileType javascript imap <c-t> $log();<esc>hi
 au FileType javascript imap <c-a> alert();<esc>hi
 
-au FileType javascript inoremap <buffer> $r return 
+au FileType javascript inoremap <buffer> $r return
 au FileType javascript inoremap <buffer> $f //--- PH<esc>FP2xi
 
-function! JavaScriptFold() 
+function! JavaScriptFold()
   setl foldmethod=syntax
   setl foldlevelstart=1
   syn region foldBraces start=/{/ end=/}/ transparent fold keepend extend
@@ -241,9 +252,9 @@ endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Syntastic (syntax checker)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
@@ -255,6 +266,7 @@ let g:syntastic_python_checkers=['pyflakes']
 
 " Javascript
 let g:syntastic_javascript_checkers = ['eslint']
+let g:jsx_ext_required = 0
 
 " Go
 let g:syntastic_auto_loc_list = 1
