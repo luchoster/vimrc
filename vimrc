@@ -8,25 +8,44 @@ Plugin 'godlygeek/tabular'
 Plugin 'scrooloose/nerdtree'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
-Plugin 'othree/yajs.vim'
-Plugin 'othree/es.next.syntax.vim'
-Plugin 'othree/javascript-libraries-syntax.vim'
-Plugin 'kchmck/vim-coffee-script'
 Plugin 'scrooloose/syntastic'
-Plugin 'jdkanani/vim-material-theme'
 Plugin 'blueyed/vim-diminactive'
 Plugin 'tpope/vim-commentary'
 Plugin 'jiangmiao/auto-pairs'
-Plugin 'pangloss/vim-javascript'
-Plugin 'mxw/vim-jsx'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'mileszs/ack.vim'
 Plugin 'rking/ag.vim'
-Plugin 'fatih/vim-go'
+Plugin 'ntpeters/vim-better-whitespace'
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Programming Language Syntax
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+Plugin 'fatih/vim-go'
+Plugin 'pangloss/vim-javascript'
+Plugin 'othree/javascript-libraries-syntax.vim'
+Plugin 'othree/es.next.syntax.vim'
+Plugin 'othree/yajs.vim'
+Plugin 'mxw/vim-jsx'
+Plugin 'kchmck/vim-coffee-script'
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Color Theme
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+Plugin 'jdkanani/vim-material-theme'
+Plugin 'sickill/vim-monokai'
 
 call vundle#end()
+
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Manually Turn on Feature
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+autocmd BufEnter * EnableStripWhitespaceOnSave
+
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -52,10 +71,16 @@ nmap <leader>s :Ag
 
 nmap ,a= :Tabularize /=<CR>
 vmap ,a= :Tabularize /=<CR>
-nmap ,a: :Tabularize /:<CR>
+nmap ,a: :Tabularize /^[^:]*\zs:<CR>
 vmap ,a: :Tabularize /:<CR>
 nmap ,aa :Tabularize /\CAS<CR>
 nmap ,ff :Tabularize /from<CR>
+nmap ,afr :Tabularize /=><CR>
+vmap ,afr :Tabularize /=><CR>
+nmap ,atr :Tabularize /-><CR>
+vmap ,atr :Tabularize /-><CR>
+nmap ,agg :Tabularize /:=<CR>
+vmap ,agg :Tabularize /:=<CR>
 
 
 set number
@@ -157,9 +182,9 @@ endif
 
 if has("gui_macvim")
   set termguicolors
-  colorscheme material-theme
+  colorscheme monokai
 else
-  colorscheme default
+  colorscheme monokai
 endif
 
 " Set utf8 as standard encoding and en_US as the standard language
@@ -280,3 +305,4 @@ func! SyntasticCheckCoffeescript()
   execute "Errors"
 endfunc
 nnoremap <silent> <leader>c :call SyntasticCheckCoffeescript()<cr>
+
