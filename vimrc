@@ -28,6 +28,7 @@ Plugin 'othree/es.next.syntax.vim'
 Plugin 'othree/yajs.vim'
 Plugin 'mxw/vim-jsx'
 Plugin 'kchmck/vim-coffee-script'
+Plugin 'leafgarland/typescript-vim'
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
