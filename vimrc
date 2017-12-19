@@ -28,8 +28,7 @@ Plugin 'othree/es.next.syntax.vim'
 Plugin 'othree/yajs.vim'
 Plugin 'mxw/vim-jsx'
 Plugin 'kchmck/vim-coffee-script'
-Plugin 'leafgarland/typescript-vim'
-
+Plugin 'flowtype/vim-flow'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Color Theme
@@ -307,3 +306,22 @@ func! SyntasticCheckCoffeescript()
 endfunc
 nnoremap <silent> <leader>c :call SyntasticCheckCoffeescript()<cr>
 
+" Plugin Markdown Preview
+Plugin 'iamcco/markdown-preview.vim'
+
+" Plugin Stylus
+Plugin 'wavded/vim-stylus'
+
+" Plugin Prettier
+Plugin 'prettier/vim-prettier'
+let g:prettier#exec_cmd_path='/usr/local/bin/prettier'
+let g:prettier#exec_cmd_async = 1
+let g:prettier#autoformat = 0
+let g:prettier#config#trailing_comma = 'es5'
+let g:prettier#config#single_quote = 'true'
+let g:prettier#config#bracket_spacing = 'true'
+let g:prettier#config#semi = 'false'
+let g:prettier#config#jsx_bracket_same_line = 'false'
+let g:prettier#config#parser = 'babylon'
+
+autocmd BufWritePre *.js,*.jsx,*.graphql PrettierAsync
