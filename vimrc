@@ -56,6 +56,15 @@ Plug 'rking/ag.vim'
 Plug 'ntpeters/vim-better-whitespace'
 
 
+" Plug Stylus
+Plug 'wavded/vim-stylus'
+Plug 'stylus/stylus'
+
+" Plugin Markdown Preview
+Plug 'iamcco/markdown-preview.vim'
+" Plugin Prettier
+Plug 'prettier/vim-prettier'
+
 " Initialize plugin system
 call plug#end()
 
@@ -72,9 +81,7 @@ autocmd BufEnter * EnableStripWhitespaceOnSave
 " Sets how many lines of history VIM has to remember
 set history=500
 
-" Enable filetype plugins
-filetype plugin on
-filetype indent on
+filetype on
 
 " Set to auto read when a file is changed from the outside
 set autoread
@@ -332,15 +339,6 @@ func! SyntasticCheckCoffeescript()
 endfunc
 nnoremap <silent> <leader>c :call SyntasticCheckCoffeescript()<cr>
 
-" Plug Markdown Preview
-Plug 'iamcco/markdown-preview.vim'
-
-" Plug Stylus
-Plug 'wavded/vim-stylus'
-Plug 'stylus/stylus'
-
-" Plug Prettier
-Plug 'prettier/vim-prettier'
 let g:prettier#exec_cmd_path='/usr/local/bin/prettier'
 let g:prettier#exec_cmd_async = 1
 let g:prettier#autoformat = 0
