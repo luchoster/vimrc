@@ -1,43 +1,63 @@
-set nocompatible
-filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+call plug#begin('~/.vim/plugged')
 
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'godlygeek/tabular'
-Plugin 'scrooloose/nerdtree'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-surround'
-Plugin 'scrooloose/syntastic'
-Plugin 'blueyed/vim-diminactive'
-Plugin 'tpope/vim-commentary'
-Plugin 'jiangmiao/auto-pairs'
-Plugin 'terryma/vim-multiple-cursors'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'mileszs/ack.vim'
-Plugin 'rking/ag.vim'
-Plugin 'ntpeters/vim-better-whitespace'
+Plug 'sickill/vim-monokai'
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Programming Language Syntax
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-Plugin 'fatih/vim-go'
-Plugin 'pangloss/vim-javascript'
-Plugin 'othree/javascript-libraries-syntax.vim'
-Plugin 'othree/es.next.syntax.vim'
-Plugin 'othree/yajs.vim'
-Plugin 'mxw/vim-jsx'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'flowtype/vim-flow'
+Plug 'junegunn/vim-easy-align'
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Color Theme
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-Plugin 'jdkanani/vim-material-theme'
-Plugin 'sickill/vim-monokai'
+" Any valid git URL is allowed
+Plug 'https://github.com/junegunn/vim-github-dashboard.git'
 
-call vundle#end()
+" Multiple Plug commands can be written in a single line using | separators
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
+" On-demand loading
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+
+" Using a non-master branch
+Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
+
+" Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
+Plug 'fatih/vim-go', { 'tag': '*' }
+
+" Plug options
+Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
+
+" Plug outside ~/.vim/plugged with post-update hook
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+
+" Unmanaged plugin (manually installed and updated)
+Plug '~/my-prototype-plugin'
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" Programming Language Syntax
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+Plug 'fatih/vim-go'
+Plug 'pangloss/vim-javascript'
+Plug 'othree/javascript-libraries-syntax.vim'
+Plug 'othree/es.next.syntax.vim'
+Plug 'othree/yajs.vim'
+Plug 'mxw/vim-jsx'
+Plug 'kchmck/vim-coffee-script'
+Plug 'flowtype/vim-flow'
+
+Plug 'godlygeek/tabular'
+Plug 'scrooloose/nerdtree'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+Plug 'scrooloose/syntastic'
+Plug 'blueyed/vim-diminactive'
+Plug 'tpope/vim-commentary'
+Plug 'jiangmiao/auto-pairs'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'Valloric/YouCompleteMe'
+Plug 'mileszs/ack.vim'
+Plug 'rking/ag.vim'
+Plug 'ntpeters/vim-better-whitespace'
+
+
+" Initialize plugin system
+call plug#end()
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -95,6 +115,7 @@ set si
 set wrap
 set relativenumber
 
+set rtp+=/usr/local/opt/fzf
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
@@ -234,10 +255,15 @@ autocmd BufWrite *.coffee :call DeleteTrailingWS()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Nerd Tree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" enable line numbers
+let NERDTreeShowLineNumbers=1
 let NERDTreeShowHidden=1
-let NERDTreeIgnore = ['\.pyc$', '__pycache__']
+let NERDTreeIgnore = ['\.pyc$', '__pycache__', '.DS_Store']
 let g:NERDTreeWinSize=35
 map <leader>nn :NERDTreeToggle<cr>
+" make sure relative line numbers are used
+autocmd FileType nerdtree setlocal relativenumber
 
 """"""""""""""""""""""""""""""
 " => CoffeeScript section
@@ -306,14 +332,15 @@ func! SyntasticCheckCoffeescript()
 endfunc
 nnoremap <silent> <leader>c :call SyntasticCheckCoffeescript()<cr>
 
-" Plugin Markdown Preview
-Plugin 'iamcco/markdown-preview.vim'
+" Plug Markdown Preview
+Plug 'iamcco/markdown-preview.vim'
 
-" Plugin Stylus
-Plugin 'wavded/vim-stylus'
+" Plug Stylus
+Plug 'wavded/vim-stylus'
+Plug 'stylus/stylus'
 
-" Plugin Prettier
-Plugin 'prettier/vim-prettier'
+" Plug Prettier
+Plug 'prettier/vim-prettier'
 let g:prettier#exec_cmd_path='/usr/local/bin/prettier'
 let g:prettier#exec_cmd_async = 1
 let g:prettier#autoformat = 0
@@ -325,3 +352,4 @@ let g:prettier#config#jsx_bracket_same_line = 'false'
 let g:prettier#config#parser = 'babylon'
 
 autocmd BufWritePre *.js,*.jsx,*.graphql PrettierAsync
+
