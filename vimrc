@@ -1,5 +1,7 @@
 call plug#begin('~/.vim/plugged')
 
+Plug 'ternjs/tern_for_vim'
+
 Plug 'sickill/vim-monokai'
 
 Plug 'junegunn/vim-easy-align'
@@ -29,9 +31,6 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 " Unmanaged plugin (manually installed and updated)
 Plug '~/my-prototype-plugin'
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" Programming Language Syntax
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 Plug 'fatih/vim-go'
 Plug 'pangloss/vim-javascript'
 Plug 'othree/javascript-libraries-syntax.vim'
@@ -54,16 +53,11 @@ Plug 'Valloric/YouCompleteMe'
 Plug 'mileszs/ack.vim'
 Plug 'rking/ag.vim'
 Plug 'ntpeters/vim-better-whitespace'
-
-
-" Plug Stylus
 Plug 'wavded/vim-stylus'
 Plug 'stylus/stylus'
-
-" Plugin Markdown Preview
 Plug 'iamcco/markdown-preview.vim'
-" Plugin Prettier
 Plug 'prettier/vim-prettier'
+Plug 'vim-airline/vim-airline'
 
 " Initialize plugin system
 call plug#end()
@@ -121,6 +115,11 @@ set ai
 set si
 set wrap
 set relativenumber
+" Always show the status line
+set laststatus=2
+set statusline=%f
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
 
 set rtp+=/usr/local/opt/fzf
 
@@ -244,21 +243,6 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
-""""""""""""""""""""""""""""""
-" => Status line
-""""""""""""""""""""""""""""""
-" Always show the status line
-set laststatus=2
-
-" Delete trailing white space on save, useful for Python and CoffeeScript ;)
-func! DeleteTrailingWS()
-  exe "normal mz"
-  %s/\s\+$//ge
-  exe "normal `z"
-endfunc
-autocmd BufWrite *.py :call DeleteTrailingWS()
-autocmd BufWrite *.coffee :call DeleteTrailingWS()
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Nerd Tree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -271,16 +255,6 @@ let g:NERDTreeWinSize=35
 map <leader>nn :NERDTreeToggle<cr>
 " make sure relative line numbers are used
 autocmd FileType nerdtree setlocal relativenumber
-
-""""""""""""""""""""""""""""""
-" => CoffeeScript section
-""""""""""""""""""""""""""""""
-function! CoffeeScriptFold()
-  setl foldmethod=indent
-  setl foldlevelstart=1
-endfunction
-au FileType coffee call CoffeeScriptFold()
-
 
 """"""""""""""""""""""""""""""
 " => JavaScript section
@@ -310,37 +284,19 @@ endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Syntastic (syntax checker)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-
-" Python
-let g:syntastic_python_checkers=['pyflakes']
-
-" Javascript
 let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_javascript_eslint_exe = 'yarn lint --'
 let g:jsx_ext_required = 0
-
-" Go
-let g:syntastic_auto_loc_list = 1
 let g:syntastic_go_checkers = ['go', 'golint', 'errcheck']
 
-" Custom CoffeeScript SyntasticCheck
-func! SyntasticCheckCoffeescript()
-  let l:filename = substitute(expand("%:p"), '\(\w\+\)\.coffee','.coffee.\1.js', '')
-  execute "tabedit " . l:filename
-  execute "SyntasticCheck"
-  execute "Errors"
-endfunc
-nnoremap <silent> <leader>c :call SyntasticCheckCoffeescript()<cr>
-
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Prettier
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:prettier#exec_cmd_path='/usr/local/bin/prettier'
-let g:prettier#exec_cmd_async = 1
 let g:prettier#autoformat = 0
 let g:prettier#config#trailing_comma = 'es5'
 let g:prettier#config#single_quote = 'true'
@@ -349,5 +305,11 @@ let g:prettier#config#semi = 'false'
 let g:prettier#config#jsx_bracket_same_line = 'false'
 let g:prettier#config#parser = 'babylon'
 
-autocmd BufWritePre *.js,*.jsx,*.graphql PrettierAsync
+autocmd BufWritePre *.js,*.jsx,*.graphql Prettier
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => YouCompleteMe
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:ycm_autoclose_preview_window_after_completion = 1
 
