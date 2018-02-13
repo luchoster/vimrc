@@ -20,7 +20,6 @@ Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
 
 " Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
-Plug 'fatih/vim-go', { 'tag': '*' }
 
 " Plug options
 Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
@@ -31,7 +30,6 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 " Unmanaged plugin (manually installed and updated)
 Plug '~/my-prototype-plugin'
 
-Plug 'fatih/vim-go'
 Plug 'pangloss/vim-javascript'
 Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'othree/es.next.syntax.vim'
@@ -59,6 +57,8 @@ Plug 'iamcco/markdown-preview.vim'
 Plug 'prettier/vim-prettier'
 Plug 'vim-airline/vim-airline'
 
+Plug 'mattn/emmet-vim', { 'for': 'html' }
+Plug 'cakebaker/scss-syntax.vim'
 " Initialize plugin system
 call plug#end()
 
@@ -305,7 +305,7 @@ let g:prettier#config#semi = 'false'
 let g:prettier#config#jsx_bracket_same_line = 'false'
 let g:prettier#config#parser = 'babylon'
 
-autocmd BufWritePre *.js,*.jsx,*.graphql Prettier
+autocmd BufWritePre *.js,*.json,*.scss,*.jsx,*.graphql Prettier
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
