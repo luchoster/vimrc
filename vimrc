@@ -17,7 +17,7 @@ Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 
 " Using a non-master branch
-Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
+" Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
 
 " Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
 
@@ -58,7 +58,13 @@ Plug 'prettier/vim-prettier'
 Plug 'vim-airline/vim-airline'
 
 Plug 'mattn/emmet-vim', { 'for': 'html' }
+
+Plug 'tomlion/vim-solidity'
+
 Plug 'cakebaker/scss-syntax.vim'
+
+Plug 'jwalton512/vim-blade'
+
 " Initialize plugin system
 call plug#end()
 
@@ -75,6 +81,7 @@ autocmd BufEnter * EnableStripWhitespaceOnSave
 " Sets how many lines of history VIM has to remember
 set history=500
 
+set foldmethod=syntax
 filetype on
 
 " Set to auto read when a file is changed from the outside
@@ -305,8 +312,17 @@ let g:prettier#config#semi = 'false'
 let g:prettier#config#jsx_bracket_same_line = 'false'
 let g:prettier#config#parser = 'babylon'
 
-autocmd BufWritePre *.js,*.json,*.scss,*.jsx,*.graphql Prettier
+autocmd BufWritePre *.py,*.js,*.json,*.scss,*.css,*.jsx,*.graphql Prettier
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => SCSS-syntax
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+au BufRead,BufNewFile *.scss set filetype=scss.css
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Blade-syntax
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+autocmd BufNewFile,BufRead *.blade.php set ft=html | set ft=phtml | set ft=blade " Fix blade auto indent
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => YouCompleteMe
